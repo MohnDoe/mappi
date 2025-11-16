@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { timing } from "hono/timing";
-import boosters from "@/routes/boosters";
+import sets from "@/routes/sets";
 
 const app = new Hono();
 
@@ -13,6 +13,6 @@ app.get("/", (c) => {
   });
 });
 
-app.route("/boosters", boosters);
+app.route("/sets", sets);
 
 export default app;
