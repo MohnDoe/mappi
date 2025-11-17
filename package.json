@@ -1,6 +1,7 @@
 {
   "name": "mappi",
   "type": "module",
+  "version": "0.0.1",
   "private": true,
   "module": "src/index.ts",
   "scripts": {
@@ -13,6 +14,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@hono/zod-openapi": "^1.1.4",
     "@lrkit/weighted": "^0.3.4",
     "dotenv": "^17.2.3",
     "hono": "^4.10.6",
