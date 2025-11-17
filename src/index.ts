@@ -1,18 +1,6 @@
-import { Hono } from 'hono'
-import { timing } from 'hono/timing'
-import sets from '@/routes/sets'
+import app from './app'
 
-const app = new Hono()
-
-app.use(timing())
-
-app.get('/', (c) => {
-  return c.json({
-    ok: true,
-    message: 'Hello World',
-  })
-})
-
-app.route('/sets', sets)
-
-export default app
+export default {
+  port: 3000,
+  fetch: app.fetch,
+}
