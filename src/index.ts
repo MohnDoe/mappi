@@ -1,7 +1,7 @@
-import app from './app'
+import app from '@/app'
+import env from '@/env'
 
 export default {
-  // eslint-disable-next-line node/prefer-global/process
-  port: process.env.PORT || 3000,
+  port: env.PORT || 3000,
   fetch: app.fetch,
 }
