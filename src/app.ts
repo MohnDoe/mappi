@@ -1,10 +1,19 @@
+import type { PinoLogger } from 'hono-pino'
 import { Hono } from 'hono'
 import notFound from '@/middlewares/not-found'
+import onError from '@/middlewares/on-error'
+import { pinoLogger } from '@/middlewares/pino-logger'
 import sets from '@/routes/sets'
-import onError from './middlewares/on-error'
 
-const app = new Hono()
+interface AppBindings {
+  Variables: {
+    logger: PinoLogger
+  }
+}
 
+const app = new Hono<AppBindings>()
+
+app.use(pinoLogger())
 app.notFound(notFound)
 app.onError(onError)
 

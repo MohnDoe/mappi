@@ -14,7 +14,10 @@
   },
   "dependencies": {
     "@lrkit/weighted": "^0.3.4",
-    "hono": "^4.10.6"
+    "hono": "^4.10.6",
+    "hono-pino": "^0.10.3",
+    "pino": "^10.1.0",
+    "pino-pretty": "^13.1.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",
