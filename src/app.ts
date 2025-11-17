@@ -1,9 +1,13 @@
 import type { PinoLogger } from 'hono-pino'
+import dotenv from 'dotenv'
 import { Hono } from 'hono'
 import notFound from '@/middlewares/not-found'
 import onError from '@/middlewares/on-error'
 import { pinoLogger } from '@/middlewares/pino-logger'
+
 import sets from '@/routes/sets'
+
+dotenv.config()
 
 interface AppBindings {
   Variables: {
