@@ -1,10 +1,10 @@
-import sealedData from "@/data/sealedExtendedData";
-import type { SealedExtendedData } from "@/models/taw.types";
+import type { SealedExtendedData } from '@/models/taw.types'
+import sealedData from '@/data/sealedExtendedData'
 
-export const listBoosters = () => {
-  return sealedData as SealedExtendedData;
-};
+export function listBoosters() {
+  return sealedData as SealedExtendedData
+}
 
-export const getSet = (code: string) => {
-  return listBoosters().find((booster) => booster.code === code);
-};
+export function getSet(code: string) {
+  return listBoosters().find(booster => booster.code === code)
+}

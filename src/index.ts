@@ -1,18 +1,18 @@
-import { Hono } from "hono";
-import { timing } from "hono/timing";
-import sets from "@/routes/sets";
+import { Hono } from 'hono'
+import { timing } from 'hono/timing'
+import sets from '@/routes/sets'
 
-const app = new Hono();
+const app = new Hono()
 
-app.use(timing());
+app.use(timing())
 
-app.get("/", (c) => {
+app.get('/', (c) => {
   return c.json({
     ok: true,
-    message: "Hello World",
-  });
-});
+    message: 'Hello World',
+  })
+})
 
-app.route("/sets", sets);
+app.route('/sets', sets)
 
-export default app;
+export default app

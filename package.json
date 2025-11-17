@@ -1,22 +1,27 @@
 {
   "name": "mappi",
   "type": "module",
+  "private": true,
+  "module": "src/index.ts",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
   },
   "dependencies": {
     "@lrkit/weighted": "^0.3.4",
     "hono": "^4.10.6"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^6.2.0",
     "@types/bun": "^1.3.2",
+    "eslint": "^9.38.0",
+    "eslint-plugin-format": "^1.0.2",
     "wrangler": "^4.4.0"
-  },
-  "module": "src/index.ts",
-  "private": true,
-  "peerDependencies": {
-    "typescript": "^5"
   }
 }
