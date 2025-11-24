@@ -1,5 +1,7 @@
+import type { ServerErrorStatusCode, SuccessStatusCode } from 'hono/utils/http-status'
 import type { ExtendedBooster, ExtendedCard, ExtendedSet } from '@/models/taw.types'
 import { createRoute, z } from '@hono/zod-openapi'
+import { StatusCodes } from 'http-status-codes'
 import { createRouter } from '@/lib/create-app'
 import notFound from '@/middlewares/not-found'
 import { Picker } from '@/services/picker'
@@ -7,33 +9,36 @@ import { getSet, listSets } from '@/services/sets'
 
 const router = createRouter()
 
-router.openapi(createRoute({
-  method: 'get',
-  path: '/',
-  responses: {
-    200: {
-      content: {
-        'application/json': {
-          schema: z.object({
-            sets: z.array(z.object<ExtendedSet>()),
-          }),
+router.openapi(
+  createRoute({
+    method: 'get',
+    path: '/',
+    responses: {
+      [StatusCodes.OK as SuccessStatusCode]: {
+        content: {
+          'application/json': {
+            schema: z.object({
+              sets: z.array(z.object<ExtendedSet>()),
+            }),
+          },
         },
+        description: 'List of available sets',
       },
-      description: 'List of available sets',
     },
+  }),
+  (c) => {
+    return c.json({
+      sets: listSets(),
+    }, StatusCodes.OK)
   },
-}), (c) => {
-  return c.json({
-    sets: listSets(),
-  }, 200)
-})
+)
 
 router.openapi(
   createRoute({
     method: 'get',
     path: '/:code/open',
     responses: {
-      200: {
+      [StatusCodes.OK as SuccessStatusCode]: {
         content: {
           'application/json': {
             schema: z.object({
@@ -48,7 +53,7 @@ router.openapi(
         },
         description: 'Simulate opening a set',
       },
-      404: {
+      [StatusCodes.NOT_FOUND as ServerErrorStatusCode]: {
         description: 'Set not found',
       },
     },
@@ -73,7 +78,7 @@ router.openapi(
       cards,
       seed: picker._seed,
       date: new Date(),
-    })
+    }, StatusCodes.OK)
   },
 )
 
@@ -82,13 +87,16 @@ router.openapi(
     method: 'get',
     path: '/:code/rates',
     responses: {
-      200: {
+      [StatusCodes.OK as SuccessStatusCode]: {
         content: {
           'application/json': {
             schema: z.any(),
           },
         },
         description: 'Calculate rates for a set',
+      },
+      [StatusCodes.NOT_FOUND as ServerErrorStatusCode]: {
+        description: 'Set not found',
       },
     },
   }),
@@ -97,7 +105,7 @@ router.openapi(
     const set = getSet(code)
 
     if (!set)
-      return c.json({ message: 'No set' })
+      return c.json({ message: 'No set' }, StatusCodes.NOT_FOUND)
 
     const boosters = []
     const totalBoostersWeight = set.boosters.reduce(
@@ -144,7 +152,7 @@ router.openapi(
 
     return c.json({
       boosters: boosters.sort((a, b) => b.rate - a.rate),
-    })
+    }, StatusCodes.OK)
   },
 )
 

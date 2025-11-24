@@ -1,9 +1,10 @@
 import type { NotFoundHandler } from 'hono'
+import { StatusCodes } from 'http-status-codes'
 
 const notFound: NotFoundHandler = (c) => {
   return c.json({
     message: `Not Found - ${c.req.path}`,
-  }, 404)
+  }, StatusCodes.NOT_FOUND)
 }
 
 export default notFound
