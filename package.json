@@ -6,7 +6,7 @@
   "module": "src/index.ts",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "build": "bun build src/index.ts",
+    "build": "bun build src/index.ts --target node",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
