@@ -9,7 +9,7 @@ const router = createRouter()
 
 router.openapi(createRoute({
   method: 'get',
-  path: '/sets',
+  path: '/',
   responses: {
     200: {
       content: {
@@ -31,7 +31,7 @@ router.openapi(createRoute({
 router.openapi(
   createRoute({
     method: 'get',
-    path: '/sets/:code/open',
+    path: '/:code/open',
     responses: {
       200: {
         content: {
@@ -80,7 +80,7 @@ router.openapi(
 router.openapi(
   createRoute({
     method: 'get',
-    path: '/sets/:code/rates',
+    path: '/:code/rates',
     responses: {
       200: {
         content: {
