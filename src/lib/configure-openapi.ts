@@ -1,5 +1,6 @@
 import type { AppOpenAPI } from './types'
 
+import { Scalar } from '@scalar/hono-api-reference'
 import pkg from '../../package.json'
 
 export function configureOpenApi(app: AppOpenAPI) {
@@ -10,6 +11,14 @@ export function configureOpenApi(app: AppOpenAPI) {
       title: 'Mappi API',
     },
   })
+
+  app.get('/reference', Scalar({
+    url: '/doc',
+    defaultHttpClient: {
+      targetKey: 'js',
+      clientKey: 'fetch',
+    },
+  }))
 
   return app
 }
