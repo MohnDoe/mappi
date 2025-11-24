@@ -9,8 +9,8 @@ import { pinoLogger } from '@/middlewares/pino-logger'
 
 dotenv.config()
 
-export function createRouter() {
-  return new OpenAPIHono<AppBindings>({
+export function createRouter<T extends AppBindings = AppBindings>() {
+  return new OpenAPIHono<T>({
     strict: false,
     defaultHook,
   })
