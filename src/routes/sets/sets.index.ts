@@ -1,5 +1,12 @@
-import type { ServerErrorStatusCode, SuccessStatusCode } from 'hono/utils/http-status'
-import type { ExtendedBooster, ExtendedCard, ExtendedSet } from '@/models/taw.types'
+import type {
+  ServerErrorStatusCode,
+  SuccessStatusCode,
+} from 'hono/utils/http-status'
+import type {
+  ExtendedBooster,
+  ExtendedCard,
+  ExtendedSet,
+} from '@/models/taw.types'
 import { createRoute, z } from '@hono/zod-openapi'
 import { StatusCodes } from 'http-status-codes'
 import { createRouter } from '@/lib/create-app'
@@ -27,9 +34,12 @@ router.openapi(
     },
   }),
   (c) => {
-    return c.json({
-      sets: listSets(),
-    }, StatusCodes.OK)
+    return c.json(
+      {
+        sets: listSets(),
+      },
+      StatusCodes.OK,
+    )
   },
 )
 
@@ -71,14 +81,17 @@ router.openapi(
 
     const { cardsPerSheet, cards } = picker.pickCards()
 
-    return c.json({
-      set,
-      selectedBooster: picker.booster!,
-      cardsPerSheet,
-      cards,
-      seed: picker._seed,
-      date: new Date(),
-    }, StatusCodes.OK)
+    return c.json(
+      {
+        set,
+        selectedBooster: picker.booster!,
+        cardsPerSheet,
+        cards,
+        seed: picker._seed,
+        date: new Date(),
+      },
+      StatusCodes.OK,
+    )
   },
 )
 
@@ -150,9 +163,12 @@ router.openapi(
       })
     }
 
-    return c.json({
-      boosters: boosters.sort((a, b) => b.rate - a.rate),
-    }, StatusCodes.OK)
+    return c.json(
+      {
+        boosters: boosters.sort((a, b) => b.rate - a.rate),
+      },
+      StatusCodes.OK,
+    )
   },
 )
 
