@@ -2,6 +2,7 @@ import type { AppBindings } from './types'
 import { OpenAPIHono } from '@hono/zod-openapi'
 import dotenv from 'dotenv'
 
+import { auth } from '@/lib/auth'
 import defaultHook from '@/middlewares/default-hook'
 import notFound from '@/middlewares/not-found'
 import onError from '@/middlewares/on-error'
@@ -22,6 +23,8 @@ export default function createApp() {
   app.use(pinoLogger())
   app.notFound(notFound)
   app.onError(onError)
+
+  app.on(['POST', 'GET'], '/api/auth/*', c => auth.handler(c.req.raw))
 
   return app
 }
