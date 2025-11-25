@@ -33,7 +33,6 @@ export class Picker {
   }
 
   pickCards() {
-    const cardsPerSheet: Record<string, ExtendedCard[]> = {}
     let cards: ExtendedCard[] = []
 
     if (!this.booster)
@@ -51,13 +50,9 @@ export class Picker {
       const selectedCards = weightedCards.pick({
         quantity: this.booster![sheetName]!,
       }) as ExtendedCard[]
-      cardsPerSheet[sheetName] = selectedCards
       cards = [...cards, ...selectedCards]
     }
 
-    return {
-      cardsPerSheet,
-      cards,
-    }
+    return cards
   }
 }

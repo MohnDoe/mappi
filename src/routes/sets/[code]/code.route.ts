@@ -36,7 +36,6 @@ codeRouter.openapi(
           'application/json': {
             schema: z.object({
               set: z.object<ExtendedSet>(),
-              selectedBooster: z.object<ExtendedBooster['sheets']>(),
               cards: z.array(z.object<ExtendedCard>()),
               seed: z.string(),
               date: z.date(),
@@ -53,12 +52,11 @@ codeRouter.openapi(
 
     picker.pickBooster()
 
-    const { cards } = picker.pickCards()
+    const cards = picker.pickCards()
 
     return c.json(
       {
         set,
-        selectedBooster: picker.booster!,
         cards,
         seed: picker._seed,
         date: new Date(),
