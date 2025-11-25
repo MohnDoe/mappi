@@ -6,7 +6,7 @@ import { StatusCodes } from 'http-status-codes'
 import { createRouter } from '@/lib/create-app'
 import setNotFound from '@/middlewares/sets/notFound'
 import { Picker } from '@/services/picker'
-import { getSet } from '@/services/sets'
+import { getSet, getSetRates } from '@/services/sets'
 
 type SetCodeRouterBindings = AppBindings & {
   Variables: {
@@ -83,53 +83,9 @@ codeRouter.openapi(
   }),
   (c) => {
     const set = c.get('set')
-    const boosters = []
-    const totalBoostersWeight = set.boosters.reduce(
-      (total, booster) => total + booster.weight,
-      0,
-    )
-
-    for (const booster of set.boosters) {
-      const boosterRate = booster.weight / totalBoostersWeight
-      const boosterSheets = []
-
-      for (const sheetName in booster.sheets) {
-        const sheetRates = {
-          name: sheetName,
-          nCardsToPick: booster.sheets[sheetName],
-          cards: [],
-        } as { name: string, nCardsToPick: number, cards: any[] }
-        const sheet = set.sheets[sheetName]!
-        const totalCardsWeight = sheet.cards.reduce(
-          (total, card) => total + card.weight,
-          0,
-        )
-        for (const card of sheet.cards) {
-          const cardRate = card.weight / totalCardsWeight
-          sheetRates.cards = [
-            ...sheetRates.cards,
-            {
-              ...card,
-              rate: cardRate,
-            },
-          ]
-        }
-
-        sheetRates.cards = sheetRates.cards.sort((a, b) => b.rate - a.rate)
-
-        boosterSheets.push(sheetRates)
-      }
-
-      boosters.push({
-        sheetsRates: boosterSheets,
-        rate: boosterRate,
-      })
-    }
 
     return c.json(
-      {
-        boosters: boosters.sort((a, b) => b.rate - a.rate),
-      },
+      getSetRates(set),
       StatusCodes.OK,
     )
   },
