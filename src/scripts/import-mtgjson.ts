@@ -1,4 +1,4 @@
-import type { Meta } from '@/models/mtgjson.types'
+import type * as MTGJSON from '@/models/mtgjson.types'
 import { mkdir } from 'node:fs/promises'
 import { createZipReader } from '@holmlibs/unzip'
 import { semver } from 'bun'
@@ -81,7 +81,7 @@ async function getAllSetsZip() {
   logger.info(`Saved sets ZIP to cache`)
 }
 
-async function getRemoteMTGJSONVersion(): Promise<Meta> {
+async function getRemoteMTGJSONVersion(): Promise<MTGJSON.Meta> {
   const url = MTGJSON_META_FILE_URL
 
   const response = await fetch(url)
@@ -91,13 +91,13 @@ async function getRemoteMTGJSONVersion(): Promise<Meta> {
   }
 
   const metaFileContent = await response.json() as {
-    data: Meta
+    data: MTGJSON.Meta
   }
 
-  return (metaFileContent.data) as Meta
+  return (metaFileContent.data) as MTGJSON.Meta
 }
 
-async function getLocalMTGJSONVersion(): Promise<Meta | null> {
+async function getLocalMTGJSONVersion(): Promise<MTGJSON.Meta | null> {
   const versionFile = Bun.file(LOCAL_MTGJSON_VERSION_FILE)
   const exists = await versionFile.exists()
 
@@ -105,7 +105,7 @@ async function getLocalMTGJSONVersion(): Promise<Meta | null> {
     return null
   }
 
-  return (await versionFile.json() as Meta)
+  return (await versionFile.json() as MTGJSON.Meta)
 }
 
 async function shouldUpdate() {
@@ -131,7 +131,7 @@ async function shouldUpdate() {
   }
 }
 
-async function saveLocalVersion(meta: Meta) {
+async function saveLocalVersion(meta: MTGJSON.Meta) {
   await mkdir(LOCAL_MTGJSON_DATA_DIR, { recursive: true })
   await Bun.write(LOCAL_MTGJSON_VERSION_FILE, JSON.stringify(meta))
 }
