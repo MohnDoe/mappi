@@ -8,6 +8,13 @@
       "when": 1764088305605,
       "tag": "0000_mighty_purifiers",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1764148011259,
+      "tag": "0001_glamorous_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }
