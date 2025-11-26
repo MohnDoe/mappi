@@ -27,7 +27,8 @@ async function main() {
     const remoteMeta = await getRemoteMTGJSONVersion()
     await getAllSetsZip()
 
-    await unzipAllSetFiles()
+    await unzipAllSetsFiles()
+    await deleteAllSetsZipFile()
 
     await saveLocalVersion(remoteMeta)
   }
@@ -36,12 +37,17 @@ async function main() {
   }
 }
 
-async function unzipAllSetFiles() {
+async function unzipAllSetsFiles() {
   const reader = createZipReader(CACHE_ZIP_FILE)
 
   await reader.extractAll(CACHE_EXTRACT_DIR, (current, total) => {
     logger.info(`Extracting: ${current}/${total} files`)
   })
+}
+
+async function deleteAllSetsZipFile() {
+  logger.debug(`Deleting: ${CACHE_ZIP_FILE}`)
+  await Bun.file(CACHE_ZIP_FILE).delete()
 }
 
 async function downloadZipFromRemote() {
