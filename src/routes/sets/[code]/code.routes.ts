@@ -1,6 +1,6 @@
 import type { SuccessStatusCode } from 'hono/utils/http-status'
 import type { AppBindings } from '@/lib/types'
-import type { ExtendedBooster, ExtendedCard, ExtendedSet } from '@/models/taw.types'
+import type { ExtendedCard, ExtendedSet } from '@/models/taw.types'
 import { createRoute, z } from '@hono/zod-openapi'
 import { StatusCodes } from 'http-status-codes'
 import { createRouter } from '@/lib/create-app'

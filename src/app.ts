@@ -1,6 +1,6 @@
 import { configureOpenApi } from '@/lib/configure-openapi'
 import createApp from '@/lib/create-app'
-import sets from '@/routes/sets/sets.index'
+import sets from '@/routes/sets/sets.routes'
 
 const app = createApp()
 

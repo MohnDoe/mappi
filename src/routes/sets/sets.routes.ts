@@ -8,7 +8,7 @@ import { createRoute, z } from '@hono/zod-openapi'
 import { StatusCodes } from 'http-status-codes'
 import { createRouter } from '@/lib/create-app'
 import { listSets } from '@/services/sets'
-import codeRouter from './[code]/code.route'
+import codeRouter from './[code]/code.routes'
 
 const router = createRouter()
 
