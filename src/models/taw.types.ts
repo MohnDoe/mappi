@@ -15,7 +15,8 @@ export interface ExtendedBooster {
 }
 
 export interface ExtendedSheet {
-  total_weighted: number
+  total_weight: number
+  balance_colors?: boolean
   cards: ExtendedCard[]
 }
 
