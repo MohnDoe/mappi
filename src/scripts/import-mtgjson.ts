@@ -24,6 +24,7 @@ async function main() {
   const needUpdate = await shouldUpdate()
 
   if (needUpdate) {
+    logger.debug('New version found, downloading...')
     const remoteMeta = await getRemoteMTGJSONVersion()
     await getAllSetsZip()
 
@@ -48,6 +49,7 @@ async function unzipAllSetsFiles() {
 async function deleteAllSetsZipFile() {
   logger.debug(`Deleting: ${CACHE_ZIP_FILE}`)
   await Bun.file(CACHE_ZIP_FILE).delete()
+  logger.debug(`Deleted: ${CACHE_ZIP_FILE}`)
 }
 
 async function downloadZipFromRemote() {
@@ -102,6 +104,7 @@ async function getLocalMTGJSONVersion(): Promise<MTGJSON.Meta | null> {
   const exists = await versionFile.exists()
 
   if (!exists) {
+    logger.debug(`No local MTGJSON version found`)
     return null
   }
 
@@ -132,8 +135,10 @@ async function shouldUpdate() {
 }
 
 async function saveLocalVersion(meta: MTGJSON.Meta) {
+  logger.debug(`Saving local MTGJSON version ${meta.version}::${meta.date}`)
   await mkdir(LOCAL_MTGJSON_DATA_DIR, { recursive: true })
   await Bun.write(LOCAL_MTGJSON_VERSION_FILE, JSON.stringify(meta))
+  logger.info(`Saved local MTGJSON version ${meta.version}::${meta.date}`)
 }
 
 main()
